@@ -82,7 +82,7 @@ class _FillFormPageState extends State<FillFormPage> {
               Container(
                 margin: EdgeInsets.symmetric(vertical: 16),
                 child: TextFormField(
-                  inputFormatters: [LowerCaseFormatter()],
+                  textCapitalization: TextCapitalization.words,
                   keyboardType: TextInputType.text,
                   onChanged: (text) {
                     frentista = text;

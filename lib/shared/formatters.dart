@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 
 class LowerCaseFormatter extends TextInputFormatter {
   @override
