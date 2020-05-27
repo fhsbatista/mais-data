@@ -1,38 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:maisdata/shared/field_validators.dart';
-import 'package:maisdata/shared/formatters.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:maisdata/widgets/Form.dart' as my;
 import 'package:url_launcher/url_launcher.dart';
 
 class FillFormPage extends StatefulWidget {
+  final my.Form form;
+
+  FillFormPage({@required this.form});
+
   @override
-  _FillFormPageState createState() => _FillFormPageState();
+  _FillFormPageState createState() => _FillFormPageState(form);
 }
 
 class _FillFormPageState extends State<FillFormPage> {
-  String hora = "";
-  String frota = "";
-  String tanque = "";
-  String frentista = "";
-  String hodometro = "";
-  String litros = "";
+  final my.Form form;
 
+  _FillFormPageState(this.form);
+
+  String _data = "";
+  String _hora = "";
+  String _frota = "";
+  String _tanque = "";
+  String _frentista = "";
+  String _hodometro = "";
+  String _litros = "";
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Preencher formulário'),
+        title: Text(form.title),
         actions: <Widget>[
           Builder(
             builder: (context) => IconButton(
                 icon: Icon(Icons.send),
                 onPressed: () {
                   if (_formKey.currentState.validate()) {
-                    _sendEmail(
-                        hora, frota, tanque, frentista, hodometro, litros);
+                    _sendEmail(_hora, _frota, _tanque, _frentista, _hodometro,
+                        _litros);
                   } else {
                     Scaffold.of(context).showSnackBar(SnackBar(
                       content: Text('Preencha todos os campos'),
@@ -49,100 +54,7 @@ class _FillFormPageState extends State<FillFormPage> {
           child: Form(
             key: _formKey,
             child: Column(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 16),
-                  child: TextFormField(
-                    inputFormatters: <TextInputFormatter>[
-                      MaskTextInputFormatter(
-                          mask: '##:##', filter: {"#": RegExp(r'[0-9]')})
-                    ],
-                    keyboardType: TextInputType.datetime,
-                    onChanged: (text) {
-                      hora = text;
-                    },
-                    validator: emptynessValidator,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Hora',
-                        helperText:
-                            'O horário em que o abastecimetento foi feito'),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 16),
-                  child: TextFormField(
-                    keyboardType: TextInputType.number,
-                    onChanged: (text) {
-                      frota = text;
-                    },
-                    validator: emptynessValidator,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Número da frota',
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 16),
-                  child: TextFormField(
-                    keyboardType: TextInputType.text,
-                    onChanged: (text) {
-                      tanque = text;
-                    },
-                    validator: emptynessValidator,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Tanque',
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 16),
-                  child: TextFormField(
-                    textCapitalization: TextCapitalization.words,
-                    keyboardType: TextInputType.text,
-                    onChanged: (text) {
-                      frentista = text;
-                    },
-                    validator: emptynessValidator,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Nome do frentista',
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 16),
-                  child: TextFormField(
-                    inputFormatters: [DecimalNumberFormatter(hundreds: 1)],
-                    keyboardType: TextInputType.number,
-                    onChanged: (text) {
-                      hodometro = text;
-                    },
-                    validator: emptynessValidator,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Hodômetro',
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 16),
-                  child: TextFormField(
-                    inputFormatters: [DecimalNumberFormatter(hundreds: 1)],
-                    keyboardType: TextInputType.number,
-                    onChanged: (text) {
-                      litros = text;
-                    },
-                    validator: emptynessValidator,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Litros',
-                    ),
-                  ),
-                )
-              ],
+              children: form.fields,
             ),
           ),
         ),
