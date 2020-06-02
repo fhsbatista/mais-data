@@ -1,8 +1,8 @@
-import 'DateField.dart';
+import 'fields/Field.dart';
 
 class Form {
   final String title;
-  final List<DateField> fields;
+  final List<Field> fields;
 
   Form({this.title, this.fields});
 }

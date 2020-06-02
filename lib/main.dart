@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:maisdata/fill_form/fill_form_page.dart';
 import 'package:maisdata/shared/colors.dart';
-import 'package:maisdata/widgets/DateField.dart';
 import 'package:maisdata/widgets/Form.dart' as my;
+import 'package:maisdata/widgets/fields/Field.dart';
 
 void main() => runApp(
       MaterialApp(
@@ -15,36 +15,16 @@ void main() => runApp(
           form: my.Form(
             title: 'Abastecimento',
             fields: [
-              DateField(
-                label: 'Data 1',
-                helperText: 'Digite aqui amigo',
+              Field.createDateFieldFactory(
+                label: 'Data',
+                onChanged: null,
+              ),
+              Field.createNameFieldFactory(
+                label: 'Nome do Frentista',
+                helperText: 'Pode ser apelido',
                 onChanged: null,
                 isRequired: true,
-              ),
-              DateField(
-                label: 'Data 1',
-                helperText: 'Digite aqui amigo',
-                onChanged: null,
-                isRequired: true,
-              ),
-              DateField(
-                label: 'Data 1',
-                helperText: 'Digite aqui amigo',
-                onChanged: null,
-                isRequired: true,
-              ),
-              DateField(
-                label: 'Data 1',
-                helperText: 'Digite aqui amigo',
-                onChanged: null,
-                isRequired: false,
-              ),
-              DateField(
-                label: 'Data 1',
-                helperText: 'Digite aqui amigo',
-                onChanged: null,
-                isRequired: false,
-              ),
+              )
             ],
           ),
         ),
