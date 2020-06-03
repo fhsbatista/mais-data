@@ -15,16 +15,15 @@ void main() => runApp(
           form: my.Form(
             title: 'Abastecimento',
             fields: [
-              Field.createDateFieldFactory(
-                label: 'Data',
-                onChanged: null,
-              ),
-              Field.createNameFieldFactory(
-                label: 'Nome do Frentista',
-                helperText: 'Pode ser apelido',
-                onChanged: null,
-                isRequired: true,
-              )
+              (FieldBuilder()
+                    ..setLabel("teste")
+                    ..setBorder(OutlineInputBorder()))
+                  .build(),
+              (FieldBuilder()
+                    ..setLabel("fala ai meu amigo")
+                    ..setBorder(UnderlineInputBorder())
+                    ..isRequired = true)
+                  .build()
             ],
           ),
         ),
