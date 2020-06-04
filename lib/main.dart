@@ -16,13 +16,22 @@ void main() => runApp(
             title: 'Abastecimento',
             fields: [
               (FieldBuilder()
-                    ..setLabel("teste")
-                    ..setBorder(OutlineInputBorder()))
+                    ..isRequired = true
+                    ..setLabel('Data do abastecimento')
+                    ..setDateFormatter())
                   .build(),
               (FieldBuilder()
-                    ..setLabel("fala ai meu amigo")
-                    ..setBorder(UnderlineInputBorder())
-                    ..isRequired = true)
+                    ..isRequired = true
+                    ..setLabel('Nome do frentista'))
+                  .build(),
+              (FieldBuilder()
+                    ..isRequired = true
+                    ..setLabel('Nome do Motorista'))
+                  .build(),
+              (FieldBuilder()
+                    ..isRequired = true
+                    ..setLabel('Hodômetro')
+                    ..setDecimalFormatter())
                   .build()
             ],
           ),

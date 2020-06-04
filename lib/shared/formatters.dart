@@ -2,6 +2,13 @@ import 'dart:math';
 
 import 'package:flutter/services.dart';
 
+class UselessFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+          TextEditingValue oldValue, TextEditingValue newValue) =>
+      newValue;
+}
+
 class LowerCaseFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
