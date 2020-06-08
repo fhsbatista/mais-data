@@ -65,6 +65,10 @@ class FieldBuilder {
     this.keyboardType = TextInputType.datetime;
   }
 
+  void setOnlyNumbersKeyboard() {
+    this.keyboardType = TextInputType.number;
+  }
+
   Field build() {
     return Field._builder(this);
   }
