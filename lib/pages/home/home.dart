@@ -43,21 +43,23 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Text(
-              'Qual formulário você quer enviar?',
-              style: kTitle,
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 32),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: forms.map((form) => form.toCard()).toList(),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Text(
+                'Qual formulário você quer enviar?',
+                style: kTitle,
               ),
-            )
-          ],
+              Container(
+                margin: EdgeInsets.only(top: 32),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: forms.map((form) => form.toCard()).toList(),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

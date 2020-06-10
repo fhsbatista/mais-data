@@ -34,6 +34,18 @@ void main() => runApp(
             title: 'Troca de óleo',
             fields: fuelFields,
           ),
+          FormModel(
+            title: 'Troca de óleo',
+            fields: fuelFields,
+          ),
+          FormModel(
+            title: 'Troca de óleo',
+            fields: fuelFields,
+          ),
+          FormModel(
+            title: 'Troca de óleo',
+            fields: fuelFields,
+          ),
         ]),
       ),
     );
