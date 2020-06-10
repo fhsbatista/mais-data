@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:maisdata/widgets/Form.dart' as my;
+import 'package:maisdata/widgets/form_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FillFormPage extends StatefulWidget {
-  final my.Form form;
+  final FormModel form;
 
   FillFormPage({@required this.form});
 
@@ -12,17 +12,18 @@ class FillFormPage extends StatefulWidget {
 }
 
 class _FillFormPageState extends State<FillFormPage> {
-  final my.Form form;
+  final FormModel form;
 
   _FillFormPageState(this.form);
 
-  String _data = "";
-  String _hora = "";
-  String _frota = "";
-  String _tanque = "";
-  String _frentista = "";
-  String _hodometro = "";
-  String _litros = "";
+  final _data = TextEditingController();
+  final _hora = TextEditingController();
+  final _frota = TextEditingController();
+  final _tanque = TextEditingController();
+  final _frentista = TextEditingController();
+  final _hodometro = TextEditingController();
+  final _litros = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -36,8 +37,14 @@ class _FillFormPageState extends State<FillFormPage> {
                 icon: Icon(Icons.send),
                 onPressed: () {
                   if (_formKey.currentState.validate()) {
-                    _sendEmail(_hora, _frota, _tanque, _frentista, _hodometro,
-                        _litros);
+                    _sendEmail(
+                        _data.text,
+                        _hora.text,
+                        _frota.text,
+                        _tanque.text,
+                        _frentista.text,
+                        _hodometro.text,
+                        _litros.text);
                   } else {
                     Scaffold.of(context).showSnackBar(SnackBar(
                       content: Text('Preencha todos os campos'),
@@ -62,9 +69,10 @@ class _FillFormPageState extends State<FillFormPage> {
     );
   }
 
-  void _sendEmail(String hora, String frota, String tanque,
+  void _sendEmail(String data, String hora, String frota, String tanque,
       String nomeDoFrentista, String hodometro, String litros) async {
     StringBuffer subjectBuffer = StringBuffer();
+    subjectBuffer.writeln("Data: $data");
     subjectBuffer.writeln("Hora: $hora");
     subjectBuffer.writeln("Frota: $frota");
     subjectBuffer.writeln("Tanque: $tanque");

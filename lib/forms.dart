@@ -13,15 +13,18 @@ List<Field> fuelFields = [
       .build(),
   (FieldBuilder()
         ..isRequired = true
-        ..setLabel('Nome do frentista'))
+        ..setLabel('Nome do frentista')
+        ..setNameFormatter())
       .build(),
   (FieldBuilder()
         ..isRequired = true
-        ..setLabel('Nome do Motorista'))
+        ..setLabel('Nome do Motorista')
+        ..setNameFormatter())
       .build(),
   (FieldBuilder()
         ..isRequired = true
-        ..setLabel('Ponto de Abastecimento'))
+        ..setLabel('Ponto de Abastecimento')
+        ..setNameFormatter())
       .build(),
   (FieldBuilder()
         ..isRequired = true

@@ -11,8 +11,8 @@ class Field extends StatelessWidget {
   final double padding;
   final TextInputFormatter formatter;
   final TextInputType keyboardType;
-
-  void Function(String text) onChanged;
+  final TextCapitalization capitalization;
+  final void Function(String text) onChanged;
 
   Field._builder(FieldBuilder builder)
       : decoration = builder.decoration,
@@ -20,6 +20,7 @@ class Field extends StatelessWidget {
         padding = builder.padding,
         formatter = builder.formatter,
         keyboardType = builder.keyboardType,
+        capitalization = builder.capitalization,
         onChanged = builder.onChanged;
 
   @override
@@ -31,6 +32,7 @@ class Field extends StatelessWidget {
         keyboardType: keyboardType,
         decoration: decoration,
         validator: isRequired ? emptynessValidator : null,
+        textCapitalization: capitalization,
       ),
     );
   }
@@ -40,6 +42,7 @@ class FieldBuilder {
   InputDecoration decoration = InputDecoration(border: OutlineInputBorder());
   TextInputFormatter formatter = UselessFormatter();
   TextInputType keyboardType = TextInputType.text;
+  TextCapitalization capitalization = TextCapitalization.none;
   bool isRequired = false;
   double padding = 10;
   void Function(String text) onChanged;
@@ -52,6 +55,10 @@ class FieldBuilder {
 
   void setBorder(InputBorder border) {
     this.decoration = decoration.copyWith(border: border);
+  }
+
+  void setNameFormatter() {
+    this.capitalization = TextCapitalization.words;
   }
 
   void setDecimalFormatter() {

@@ -1,8 +1,8 @@
 import 'fields/Field.dart';
 
-class Form {
+class FormModel {
   final String title;
   final List<Field> fields;
 
-  Form({this.title, this.fields});
+  FormModel({this.title, this.fields});
 }
