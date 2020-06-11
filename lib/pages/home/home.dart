@@ -21,31 +21,24 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Mais Data',
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Text(
-                'Qual formulário você quer enviar?',
-                style: kTitle,
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Text(
+              'Qual formulário você quer enviar?',
+              style: kTitle,
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 32),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: forms.map((form) => form.toCard(context)).toList(),
               ),
-              Container(
-                margin: EdgeInsets.only(top: 32),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: forms.map((form) => form.toCard(context)).toList(),
-                ),
-              )
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );
@@ -58,7 +51,7 @@ extension on FormModel {
         child: InkWell(
           onTap: () => context.openPage(FillFormPage(form: this)),
           child: Card(
-            color: Color(0xffa0a8ff),
+            color: Theme.of(context).accentColor,
             child: Container(
               padding: EdgeInsets.all(16),
               height: 90,
