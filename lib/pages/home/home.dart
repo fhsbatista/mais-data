@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:maisdata/pages/fill_form/fill_form_page.dart';
 import 'package:maisdata/shared/styles/text.dart';
@@ -55,6 +57,12 @@ extension on FormModel {
             child: Container(
               padding: EdgeInsets.all(16),
               height: 90,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(getImageUrl()),
+                  fit: BoxFit.cover,
+                ),
+              ),
               child: Text(
                 this.title,
                 style: TextStyle(
