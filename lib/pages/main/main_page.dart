@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:maisdata/pages/create_form/create_form_page.dart';
 import 'package:maisdata/pages/home/home.dart';
+import 'package:maisdata/pages/manage_forms/manage_forms_page.dart';
 import 'package:maisdata/widgets/form_model.dart';
 
 import '../../forms.dart';
@@ -14,7 +14,7 @@ class _MainPageState extends State<MainPage> {
   int _selectedScreenIndex = 0;
   final _screens = [
     HomePage(forms: forms),
-    CreateFormPage(),
+    ManageFormsPage(),
   ];
 
   _onBottomNavigationTapped(int itemTappedIndex) {
@@ -47,8 +47,8 @@ class _MainPageState extends State<MainPage> {
               title: Text('Enviar'),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.add),
-              title: Text('Criar'),
+              icon: Icon(Icons.settings),
+              title: Text('Gerenciar'),
             ),
           ],
           onTap: (index) => _onBottomNavigationTapped(index),

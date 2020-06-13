@@ -23,25 +23,23 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Text(
-              'Qual formulário você quer enviar?',
-              style: kTitle,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Text(
+            'Qual formulário você quer enviar?',
+            style: kTitle,
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 32),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: forms.map((form) => form.toCard(context)).toList(),
             ),
-            Container(
-              margin: EdgeInsets.only(top: 32),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: forms.map((form) => form.toCard(context)).toList(),
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

@@ -23,6 +23,14 @@ class Field extends StatelessWidget {
         capitalization = builder.capitalization,
         onChanged = builder.onChanged;
 
+  String getLabel() {
+    return this.decoration.labelText;
+  }
+
+  String getHint() {
+    return "Preenha este campo";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
