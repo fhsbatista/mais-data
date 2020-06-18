@@ -7,6 +7,7 @@ void main() => runApp(
         theme: ThemeData(
           fontFamily: 'SF UI Display',
           primaryColor: kPrimaryColor,
+          primaryColorDark: kPrimaryDarkColor,
           accentColor: kAccentColor,
         ),
         title: 'Mais Data',
