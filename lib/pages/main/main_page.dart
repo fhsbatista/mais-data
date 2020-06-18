@@ -33,8 +33,8 @@ class _MainPageState extends State<MainPage> {
         ),
         body: _screens[_selectedScreenIndex],
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Theme.of(context).accentColor,
-          selectedFontSize: 14,
+          backgroundColor: Theme.of(context).primaryColor,
+          selectedItemColor: Colors.white,
           selectedIconTheme: IconThemeData(
             color: Colors.white,
             size: 25,

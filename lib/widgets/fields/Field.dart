@@ -12,6 +12,7 @@ class Field extends StatelessWidget {
   final TextInputFormatter formatter;
   final TextInputType keyboardType;
   final TextCapitalization capitalization;
+  final FieldType fieldType;
   final void Function(String text) onChanged;
 
   Field._builder(FieldBuilder builder)
@@ -21,14 +22,19 @@ class Field extends StatelessWidget {
         formatter = builder.formatter,
         keyboardType = builder.keyboardType,
         capitalization = builder.capitalization,
+        fieldType = builder.fieldType,
         onChanged = builder.onChanged;
 
   String getLabel() {
     return this.decoration.labelText;
   }
 
-  String getHint() {
-    return "Preenha este campo";
+  String getHelper() {
+    return this.decoration.helperText;
+  }
+
+  String getTypeDescription() {
+    return this.fieldType.getDescription();
   }
 
   @override
@@ -51,40 +57,105 @@ class FieldBuilder {
   TextInputFormatter formatter = UselessFormatter();
   TextInputType keyboardType = TextInputType.text;
   TextCapitalization capitalization = TextCapitalization.none;
+  FieldType fieldType = FieldType.NO_TYPE;
   bool isRequired = false;
   double padding = 10;
   void Function(String text) onChanged;
 
   FieldBuilder();
 
-  void setLabel(String label) {
+  setLabel(String label) {
     this.decoration = decoration.copyWith(labelText: label);
   }
 
-  void setBorder(InputBorder border) {
+  setHelper(String helper) {
+    this.decoration = decoration.copyWith(helperText: helper);
+  }
+
+  setBorder(InputBorder border) {
     this.decoration = decoration.copyWith(border: border);
   }
 
-  void setNameFormatter() {
+  setNameFormatter() {
     this.capitalization = TextCapitalization.words;
   }
 
-  void setDecimalFormatter() {
+  setDecimalFormatter() {
     this.formatter = DecimalNumberFormatter();
     this.keyboardType = TextInputType.number;
   }
 
-  void setDateFormatter() {
+  setDateFormatter() {
     this.formatter = MaskTextInputFormatter(
         mask: kDateMask, filter: {"#": RegExp(r'[0-9]')});
     this.keyboardType = TextInputType.datetime;
   }
 
-  void setOnlyNumbersKeyboard() {
+  setOnlyNumbersKeyboard() {
     this.keyboardType = TextInputType.number;
+  }
+
+  setType(FieldType type) {
+    fieldType = type;
+    switch (type) {
+      case FieldType.NAME:
+        {
+          _setNameType();
+        }
+        break;
+      case FieldType.DATE:
+        {
+          _setNameType();
+        }
+        break;
+      case FieldType.QUANTITY:
+        {
+          _setNameType();
+        }
+        break;
+      default:
+        {
+          _setNameType();
+        }
+        break;
+    }
+  }
+
+  _setNameType() {
+    capitalization = TextCapitalization.words;
+    keyboardType = TextInputType.text;
   }
 
   Field build() {
     return Field._builder(this);
+  }
+}
+
+enum FieldType { NAME, QUANTITY, DATE, NO_TYPE }
+
+extension FieldTypeExtensions on FieldType {
+  String getDescription() {
+    switch (this) {
+      case FieldType.NAME:
+        {
+          return 'Nome';
+        }
+        break;
+      case FieldType.QUANTITY:
+        {
+          return 'Quantidade';
+        }
+        break;
+      case FieldType.DATE:
+        {
+          return 'Data';
+        }
+        break;
+      default:
+        {
+          return 'Sem tipo';
+        }
+        break;
+    }
   }
 }
