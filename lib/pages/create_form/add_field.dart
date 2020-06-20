@@ -54,10 +54,6 @@ class _AddFieldState extends State<AddField> {
         ),
         _InputField('Nome do campo', labelController),
         _InputField('Dica', helperController),
-        _InputField('Dica', helperController),
-        _InputField('Dica', helperController),
-        _InputField('Dica', helperController),
-        _InputField('Dica', helperController),
         DropdownButtonFormField(
           value: fieldType,
           decoration: InputDecoration(
