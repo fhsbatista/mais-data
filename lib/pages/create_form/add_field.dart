@@ -13,7 +13,9 @@ class AddField extends StatefulWidget {
 
 class _AddFieldState extends State<AddField> {
   final labelController = TextEditingController();
+  final labelFocus = FocusNode();
   final helperController = TextEditingController();
+  final helperFocus = FocusNode();
   bool isRequired = false;
   FieldType fieldType = null;
 
@@ -52,8 +54,8 @@ class _AddFieldState extends State<AddField> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        _InputField('Nome do campo', labelController),
-        _InputField('Dica', helperController),
+        _InputField('Nome do campo', labelController, labelFocus, helperFocus),
+        _InputField('Dica', helperController, helperFocus, null),
         DropdownButtonFormField(
           value: fieldType,
           decoration: InputDecoration(
@@ -104,7 +106,8 @@ class _AddFieldState extends State<AddField> {
     );
   }
 
-  Container _InputField(String name, TextEditingController controller) {
+  Container _InputField(String name, TextEditingController controller,
+      FocusNode focusNode, FocusNode nextFocus) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 16),
       child: TextFormField(
@@ -113,6 +116,15 @@ class _AddFieldState extends State<AddField> {
           border: OutlineInputBorder(),
           labelText: name,
         ),
+        textInputAction:
+            (nextFocus != null) ? TextInputAction.next : TextInputAction.done,
+        focusNode: focusNode,
+        onFieldSubmitted: (value) {
+          focusNode.unfocus();
+          if (nextFocus != null) {
+            FocusScope.of(context).requestFocus(nextFocus);
+          }
+        },
       ),
     );
   }
