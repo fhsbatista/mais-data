@@ -1,11 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:maisdata/pages/fill_form/fill_form_page.dart';
+import 'package:maisdata/presentation/pages/fill_form/fill_form_page.dart';
+import 'package:maisdata/presentation/widgets/form_model.dart';
+import 'package:maisdata/shared/extensions.dart';
 import 'package:maisdata/shared/styles/text.dart';
-import 'package:maisdata/widgets/form_model.dart';
-
-import '../../shared/extensions.dart';
 
 class HomePage extends StatefulWidget {
   final List<FormModel> forms;
