@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:maisdata/presentation/widgets/fields/Field.dart';
 import 'package:maisdata/shared/colors.dart';
-import 'package:maisdata/widgets/fields/Field.dart';
 
 class AddField extends StatefulWidget {
   final Function(Field) onSubmit;

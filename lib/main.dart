@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maisdata/pages/main/main_page.dart';
+import 'package:maisdata/presentation/pages/main/main_page.dart';
 import 'package:maisdata/shared/colors.dart';
 
 void main() => runApp(

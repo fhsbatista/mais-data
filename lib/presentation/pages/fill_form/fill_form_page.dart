@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maisdata/widgets/form_model.dart';
+import 'package:maisdata/presentation/widgets/form_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FillFormPage extends StatefulWidget {

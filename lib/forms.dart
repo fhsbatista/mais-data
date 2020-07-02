@@ -1,4 +1,4 @@
-import 'package:maisdata/widgets/fields/Field.dart';
+import 'package:maisdata/presentation/widgets/fields/Field.dart';
 
 List<Field> fuelFields = [
   (FieldBuilder()
