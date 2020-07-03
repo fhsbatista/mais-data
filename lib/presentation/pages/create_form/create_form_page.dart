@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maisdata/presentation/pages/create_form/add_field.dart';
 import 'package:maisdata/presentation/widgets/fields/Field.dart';
 
 class CreateFormPage extends StatefulWidget {
@@ -10,6 +11,41 @@ class _CreateFormPageState extends State<CreateFormPage> {
   List<Field> fields = List<Field>();
   ScrollController scrollController = ScrollController();
 
+  _displayCreateFormModal(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return FractionallySizedBox(
+          heightFactor: 0.6,
+          child: DraggableScrollableSheet(
+              initialChildSize: 1,
+              minChildSize: 0.5,
+              maxChildSize: 1,
+              builder: (context, scrollController) {
+                return SingleChildScrollView(
+                  padding: EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      FlatButton(
+                        child: Text('Fechar'),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                      AddField(
+                        onSubmit: (field) {
+                          _addField(field);
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              }),
+        );
+      },
+    );
+  }
+
   _addField(Field field) {
     setState(() {
       fields.add(field);
@@ -18,6 +54,12 @@ class _CreateFormPageState extends State<CreateFormPage> {
         duration: Duration(milliseconds: 500),
         curve: Curves.linear,
       );
+    });
+  }
+
+  _deleteField(int index) {
+    setState(() {
+      fields.removeAt(index);
     });
   }
 
@@ -31,17 +73,13 @@ class _CreateFormPageState extends State<CreateFormPage> {
           controller: scrollController,
           itemCount: fields.length,
           itemBuilder: (context, index) {
-            return fields[index].toCard();
+            return fields[index].toCard(index, () => _deleteField(index));
           }),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         backgroundColor: Theme.of(context).accentColor,
         onPressed: () {
-          final field = (FieldBuilder()
-                ..setLabel('Nome do Produto')
-                ..isRequired = false)
-              .build();
-          _addField(field);
+          _displayCreateFormModal(context);
         },
       ),
     );
@@ -49,12 +87,12 @@ class _CreateFormPageState extends State<CreateFormPage> {
 }
 
 extension on Field {
-  Card toCard() {
+  Card toCard(int index, Function() onDelete) {
     return Card(
       elevation: 12,
       margin: EdgeInsets.all(16),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(vertical: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -71,11 +109,28 @@ extension on Field {
                       child: Text('Dica: ${this.getHelper()}')),
                   Container(
                     margin: EdgeInsets.only(top: 2),
-                    child: Text(
-                      (this.isRequired) ? 'Obrigatório' : 'Opcional',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: (this.isRequired) ? Colors.red : Colors.green),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        Text(
+                          (this.isRequired) ? 'Obrigatório' : 'Opcional',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: (this.isRequired)
+                                  ? Colors.red
+                                  : Colors.green),
+                        ),
+                        Expanded(
+                          child: Container(),
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                          ),
+                          onPressed: onDelete,
+                        )
+                      ],
                     ),
                   ),
                 ],

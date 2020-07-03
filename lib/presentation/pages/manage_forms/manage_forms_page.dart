@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maisdata/presentation/pages/create_form/create_form_overview_page.dart';
+import 'package:maisdata/presentation/pages/create_form/create_form_page.dart';
 import 'package:maisdata/shared/styles/text.dart';
 
 import '../../../shared/extensions.dart';
@@ -21,7 +21,7 @@ class _ManageFormsPageState extends State<ManageFormsPage> {
             'Criar formulário',
             style: kTitle,
           ),
-          onPressed: () => context.openPage(CreateFormOverviewPage()),
+          onPressed: () => context.openPage(CreateFormPage()),
         ),
         FlatButton(
           child: Text(
