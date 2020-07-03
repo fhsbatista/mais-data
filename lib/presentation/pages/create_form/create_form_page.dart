@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:maisdata/data/data_source/local/app_local_data_source.dart';
+import 'package:maisdata/data/repository/app_repository.dart';
+import 'package:maisdata/data/storage/app_storage.dart';
+import 'package:maisdata/domain/use_case/save_form_use_case.dart';
 import 'package:maisdata/presentation/pages/create_form/add_field.dart';
 import 'package:maisdata/presentation/widgets/fields/Field.dart';
+import 'package:maisdata/presentation/widgets/form_model.dart';
 
 class CreateFormPage extends StatefulWidget {
   @override
@@ -8,8 +13,9 @@ class CreateFormPage extends StatefulWidget {
 }
 
 class _CreateFormPageState extends State<CreateFormPage> {
-  List<Field> fields = List<Field>();
-  ScrollController scrollController = ScrollController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  List<Field> _fields = List<Field>();
+  ScrollController _scrollController = ScrollController();
 
   _displayCreateFormModal(BuildContext context) {
     showModalBottomSheet(
@@ -48,9 +54,9 @@ class _CreateFormPageState extends State<CreateFormPage> {
 
   _addField(Field field) {
     setState(() {
-      fields.add(field);
-      scrollController.animateTo(
-        scrollController.position.maxScrollExtent,
+      _fields.add(field);
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
         duration: Duration(milliseconds: 500),
         curve: Curves.linear,
       );
@@ -59,21 +65,45 @@ class _CreateFormPageState extends State<CreateFormPage> {
 
   _deleteField(int index) {
     setState(() {
-      fields.removeAt(index);
+      _fields.removeAt(index);
     });
+  }
+
+  _saveForm() async {
+    final form = FormModel(title: 'Formulário teste', fields: _fields);
+    final useCase = SaveForm(
+      AppRepository(
+        AppLocalDataSource(
+          AppStorage(),
+        ),
+      ),
+    );
+    await useCase.call(form);
+    Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text('Criar Formuário'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.check,
+              size: Theme.of(context).appBarTheme.actionsIconTheme.size,
+            ),
+            color: Theme.of(context).accentIconTheme.color,
+            onPressed: _saveForm,
+          )
+        ],
       ),
       body: ListView.builder(
-          controller: scrollController,
-          itemCount: fields.length,
+          controller: _scrollController,
+          itemCount: _fields.length,
           itemBuilder: (context, index) {
-            return fields[index].toCard(index, () => _deleteField(index));
+            return _fields[index].toCard(index, () => _deleteField(index));
           }),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
