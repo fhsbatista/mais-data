@@ -8,5 +8,7 @@ class AppLocalDataSource implements LocalDataSource {
   AppLocalDataSource(this.storage);
 
   @override
-  Future<void> saveForm(FormModel form) {}
+  Future<void> saveForm(FormModel form) {
+    return storage.saveForm(form);
+  }
 }

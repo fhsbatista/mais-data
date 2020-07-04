@@ -5,4 +5,9 @@ class FormModel {
   final List<Field> fields;
 
   FormModel({this.title, this.fields});
+
+  @override
+  String toString() {
+    return 'Title: ${this.title}';
+  }
 }
