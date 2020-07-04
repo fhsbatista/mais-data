@@ -28,6 +28,7 @@ class _ManageFormsPageState extends State<ManageFormsPage> {
             'Importar por QRCode',
             style: kTitle,
           ),
+          onPressed: () {},
         )
       ],
     ));

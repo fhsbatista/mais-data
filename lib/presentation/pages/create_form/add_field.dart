@@ -17,7 +17,7 @@ class _AddFieldState extends State<AddField> {
   final helperController = TextEditingController();
   final helperFocus = FocusNode();
   bool isRequired = false;
-  FieldType fieldType = null;
+  FieldType fieldType;
 
   _onSubmit(BuildContext context) {
     final label = labelController.text;
