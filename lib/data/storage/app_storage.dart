@@ -5,5 +5,8 @@ class AppStorage implements Storage {
   //todo por código que salva no banco.
 
   @override
-  Future<void> saveForm(FormModel form) {}
+  Future<void> saveForm(FormModel form) {
+    print('Form saved successfully: $form');
+    return Future.value();
+  }
 }

@@ -8,5 +8,7 @@ class AppRepository implements Repository {
   AppRepository(this.localDataSource);
 
   @override
-  Future<void> saveForm(FormModel form) {}
+  Future<void> saveForm(FormModel form) {
+    return localDataSource.saveForm(form);
+  }
 }
