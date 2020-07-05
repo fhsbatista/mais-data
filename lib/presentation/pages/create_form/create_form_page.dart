@@ -78,8 +78,14 @@ class _CreateFormPageState extends State<CreateFormPage> {
         ),
       ),
     );
-    await useCase.call(form);
-    Navigator.of(context).pop();
+    await useCase
+        .call(form)
+        .then((value) => Navigator.of(context).pop())
+        .catchError((error) => _onSaveFormError(error));
+  }
+
+  _onSaveFormError(String error) {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(error)));
   }
 
   @override
