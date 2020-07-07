@@ -11,4 +11,9 @@ class AppRepository implements Repository {
   Future<void> saveForm(FormModel form) {
     return localDataSource.saveForm(form);
   }
+
+  @override
+  Future<List<FormModel>> getForms() {
+    return localDataSource.getForms();
+  }
 }
