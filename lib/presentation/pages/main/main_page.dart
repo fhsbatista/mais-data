@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:maisdata/presentation/pages/home/home.dart';
 import 'package:maisdata/presentation/pages/manage_forms/manage_forms_page.dart';
-import 'package:maisdata/presentation/widgets/form_model.dart';
-
-import '../../../forms.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -13,7 +10,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _selectedScreenIndex = 0;
   final _screens = [
-    HomePage(forms: forms),
+    HomePage(),
     ManageFormsPage(),
   ];
 
@@ -55,38 +52,3 @@ class _MainPageState extends State<MainPage> {
         ));
   }
 }
-
-final forms = [
-  FormModel(
-    title: 'Abastecimento',
-    fields: fuelFields,
-  ),
-  FormModel(
-    title: 'Baixa de estoque',
-    fields: fuelFields,
-  ),
-  FormModel(
-    title: 'Despesa externa',
-    fields: fuelFields,
-  ),
-  FormModel(
-    title: 'Troca de pneu',
-    fields: fuelFields,
-  ),
-  FormModel(
-    title: 'Troca de óleo',
-    fields: fuelFields,
-  ),
-  FormModel(
-    title: 'Troca de óleo',
-    fields: fuelFields,
-  ),
-  FormModel(
-    title: 'Troca de óleo',
-    fields: fuelFields,
-  ),
-  FormModel(
-    title: 'Troca de óleo',
-    fields: fuelFields,
-  ),
-];
