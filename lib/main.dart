@@ -4,6 +4,7 @@ import 'package:maisdata/shared/colors.dart';
 
 void main() => runApp(
       MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
             fontFamily: 'SF UI Display',
             primaryColor: kPrimaryColor,
