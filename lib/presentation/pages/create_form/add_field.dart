@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maisdata/presentation/widgets/fields/Field.dart';
+import 'package:maisdata/model/field.dart';
 import 'package:maisdata/shared/colors.dart';
 
 class AddField extends StatefulWidget {
@@ -27,17 +27,13 @@ class _AddFieldState extends State<AddField> {
       return;
     }
 
-    widget.onSubmit(_Field(label, helper, isRequired, fieldType));
+    widget.onSubmit(Field(
+      label: label,
+      helper: helper,
+      isRequired: isRequired,
+      type: fieldType,
+    ));
     Navigator.pop(context);
-  }
-
-  Field _Field(String label, String helper, bool isRequired, FieldType type) {
-    return (FieldBuilder()
-          ..setLabel(label)
-          ..setHelper(helper)
-          ..setType(type)
-          ..isRequired = isRequired)
-        .build();
   }
 
   @override

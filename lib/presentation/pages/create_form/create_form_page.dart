@@ -3,9 +3,9 @@ import 'package:maisdata/data/data_source/local/app_local_data_source.dart';
 import 'package:maisdata/data/repository/app_repository.dart';
 import 'package:maisdata/data/storage/app_storage.dart';
 import 'package:maisdata/domain/use_case/save_form_use_case.dart';
+import 'package:maisdata/model/field.dart';
+import 'package:maisdata/model/form_model.dart';
 import 'package:maisdata/presentation/pages/create_form/add_field.dart';
-import 'package:maisdata/presentation/widgets/fields/Field.dart';
-import 'package:maisdata/presentation/widgets/form_model.dart';
 
 class CreateFormPage extends StatefulWidget {
   @override
@@ -133,16 +133,16 @@ extension on Field {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             ListTile(
-              title: Text('${this.getLabel()}'),
+              title: Text('${this.label}'),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
                       margin: EdgeInsets.only(top: 8),
-                      child: Text('Tipo: ${this.getTypeDescription()}')),
+                      child: Text('Tipo: ${this.type.getDescription()}')),
                   Container(
                       margin: EdgeInsets.only(top: 2),
-                      child: Text('Dica: ${this.getHelper()}')),
+                      child: Text('Dica: ${this.helper}')),
                   Container(
                     margin: EdgeInsets.only(top: 2),
                     child: Row(

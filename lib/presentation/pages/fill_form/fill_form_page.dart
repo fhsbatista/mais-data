@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:maisdata/presentation/widgets/form_model.dart';
+import 'package:maisdata/model/form_model.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../model/field.dart';
 
 class FillFormPage extends StatefulWidget {
   final FormModel form;
@@ -61,7 +63,8 @@ class _FillFormPageState extends State<FillFormPage> {
           child: Form(
             key: _formKey,
             child: Column(
-              children: form.fields,
+              children:
+                  form.fields.map((field) => field.toFieldWidget()).toList(),
             ),
           ),
         ),
