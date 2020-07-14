@@ -1,39 +1,29 @@
-import 'package:maisdata/presentation/widgets/fields/Field.dart';
+import 'model/field.dart';
 
 List<Field> fuelFields = [
-  (FieldBuilder()
-        ..isRequired = true
-        ..setLabel('Data do abastecimento')
-        ..setDateFormatter())
-      .build(),
-  (FieldBuilder()
-        ..isRequired = true
-        ..setLabel('Frota abastecida')
-        ..setOnlyNumbersKeyboard())
-      .build(),
-  (FieldBuilder()
-        ..isRequired = true
-        ..setLabel('Nome do frentista')
-        ..setNameFormatter())
-      .build(),
-  (FieldBuilder()
-        ..isRequired = true
-        ..setLabel('Nome do Motorista')
-        ..setNameFormatter())
-      .build(),
-  (FieldBuilder()
-        ..isRequired = true
-        ..setLabel('Ponto de Abastecimento')
-        ..setNameFormatter())
-      .build(),
-  (FieldBuilder()
-        ..isRequired = true
-        ..setLabel('Hodômetro')
-        ..setDecimalFormatter())
-      .build(),
-  (FieldBuilder()
-        ..isRequired = true
-        ..setLabel('Litros')
-        ..setDecimalFormatter())
-      .build(),
+  Field(
+    label: 'Data do abastecimento',
+    isRequired: true,
+    mask: FieldMask.DATE,
+    type: FieldType.DATE,
+  ),
+  Field(
+    label: 'Frota abastecida',
+    isRequired: true,
+    keyboardType: FieldKeyboardType.NUMBER,
+  ),
+  Field(label: 'Nome do frentista', isRequired: true, type: FieldType.NAME),
+  Field(label: 'Nome do motorista', isRequired: true, type: FieldType.NAME),
+  Field(
+      label: 'Ponto de Abastecimento', isRequired: true, type: FieldType.NAME),
+  Field(
+      label: 'Hodômetro',
+      isRequired: true,
+      type: FieldType.QUANTITY,
+      mask: FieldMask.DECIMAL),
+  Field(
+      label: 'Litros',
+      isRequired: true,
+      type: FieldType.QUANTITY,
+      mask: FieldMask.DECIMAL),
 ];

@@ -1,6 +1,6 @@
 import 'package:maisdata/data/data_source/local/local_data_source.dart';
 import 'package:maisdata/domain/repository/repository.dart';
-import 'package:maisdata/presentation/widgets/form_model.dart';
+import 'package:maisdata/model/form_model.dart';
 
 class AppRepository implements Repository {
   final LocalDataSource localDataSource;

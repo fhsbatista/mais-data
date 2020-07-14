@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:maisdata/model/field.dart';
 import 'package:maisdata/shared/field_validators.dart';
 import 'package:maisdata/shared/formatters.dart';
 import 'package:maisdata/shared/masks.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-class Field extends StatelessWidget {
+class FieldWidget extends StatelessWidget {
   final InputDecoration decoration;
   final bool isRequired;
   final double padding;
@@ -15,7 +16,7 @@ class Field extends StatelessWidget {
   final FieldType fieldType;
   final void Function(String text) onChanged;
 
-  Field._builder(FieldBuilder builder)
+  FieldWidget._builder(FieldWidgetBuilder builder)
       : decoration = builder.decoration,
         isRequired = builder.isRequired,
         padding = builder.padding,
@@ -52,7 +53,7 @@ class Field extends StatelessWidget {
   }
 }
 
-class FieldBuilder {
+class FieldWidgetBuilder {
   InputDecoration decoration = InputDecoration(border: OutlineInputBorder());
   TextInputFormatter formatter = UselessFormatter();
   TextInputType keyboardType = TextInputType.text;
@@ -62,7 +63,7 @@ class FieldBuilder {
   double padding = 10;
   void Function(String text) onChanged;
 
-  FieldBuilder();
+  FieldWidgetBuilder();
 
   setLabel(String label) {
     this.decoration = decoration.copyWith(labelText: label);
@@ -126,36 +127,7 @@ class FieldBuilder {
     keyboardType = TextInputType.text;
   }
 
-  Field build() {
-    return Field._builder(this);
-  }
-}
-
-enum FieldType { NAME, QUANTITY, DATE, NO_TYPE }
-
-extension FieldTypeExtensions on FieldType {
-  String getDescription() {
-    switch (this) {
-      case FieldType.NAME:
-        {
-          return 'Nome';
-        }
-        break;
-      case FieldType.QUANTITY:
-        {
-          return 'Quantidade';
-        }
-        break;
-      case FieldType.DATE:
-        {
-          return 'Data';
-        }
-        break;
-      default:
-        {
-          return 'Sem tipo';
-        }
-        break;
-    }
+  FieldWidget build() {
+    return FieldWidget._builder(this);
   }
 }

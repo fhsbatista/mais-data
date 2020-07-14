@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:maisdata/data/storage/storage.dart';
-import 'package:maisdata/presentation/widgets/form_model.dart';
+import 'package:maisdata/model/form_model.dart';
 
 import '../../forms.dart';
 

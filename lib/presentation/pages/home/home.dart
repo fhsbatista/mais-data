@@ -5,8 +5,8 @@ import 'package:maisdata/data/data_source/local/app_local_data_source.dart';
 import 'package:maisdata/data/repository/app_repository.dart';
 import 'package:maisdata/data/storage/app_storage.dart';
 import 'package:maisdata/domain/use_case/get_forms_use_case.dart';
+import 'package:maisdata/model/form_model.dart';
 import 'package:maisdata/presentation/pages/fill_form/fill_form_page.dart';
-import 'package:maisdata/presentation/widgets/form_model.dart';
 import 'package:maisdata/shared/extensions.dart';
 import 'package:maisdata/shared/styles/text.dart';
 
