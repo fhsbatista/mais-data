@@ -81,11 +81,13 @@ class _CreateFormPageState extends State<CreateFormPage> {
     await useCase
         .call(form)
         .then((value) => Navigator.of(context).pop())
-        .catchError((error) => _onSaveFormError(error));
+        .catchError(
+            (dynamic error) => _onSaveFormError(error as ArgumentError));
   }
 
-  _onSaveFormError(String error) {
-    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(error)));
+  _onSaveFormError(ArgumentError error) {
+    _scaffoldKey.currentState
+        .showSnackBar(SnackBar(content: Text(error.toString())));
   }
 
   @override
