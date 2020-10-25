@@ -11,8 +11,6 @@ import 'package:maisdata/shared/extensions.dart';
 import 'package:maisdata/shared/styles/text.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage();
-
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -26,7 +24,7 @@ class _HomePageState extends State<HomePage> {
     ),
   );
 
-  List<FormModel> forms = [];
+  List<FormModel> _forms = [];
 
   _HomePageState();
 
@@ -37,10 +35,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _setForms() async {
-    final persistedForms = await useCase.call();
-    setState(() {
-      forms = persistedForms;
-    });
+    await useCase
+        .call()
+        .then((value) => setState(() => _forms = value))
+        .catchError((error) => _onError(error));
+  }
+
+  void _onError(dynamic msg) {
+    // widget.onError(msg.toString());
   }
 
   @override
@@ -55,12 +57,13 @@ class _HomePageState extends State<HomePage> {
             style: kTitle,
           ),
           Container(
-            margin: EdgeInsets.only(top: 32),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: forms.map((form) => form.toCard(context)).toList(),
-            ),
-          )
+              margin: EdgeInsets.only(top: 32),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: _forms.isNotEmpty
+                    ? _forms.map((form) => form.toCard(context)).toList()
+                    : [Center(child: Text('Não existem formulários salvos'))],
+              ))
         ],
       ),
     );

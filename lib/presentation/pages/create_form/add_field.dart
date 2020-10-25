@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:maisdata/model/field.dart';
+import 'package:maisdata/model/field_type.dart';
 import 'package:maisdata/shared/colors.dart';
 
 class AddField extends StatefulWidget {
@@ -64,11 +65,11 @@ class _AddFieldState extends State<AddField> {
               fieldType = value;
             });
           },
-          items: FieldType.values
+          items: FieldType.types
               .map<DropdownMenuItem<FieldType>>(
                 (type) => DropdownMenuItem<FieldType>(
                   value: type,
-                  child: Text(type.getDescription()),
+                  child: Text(type.description),
                 ),
               )
               .toList(),

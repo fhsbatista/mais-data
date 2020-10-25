@@ -1,6 +1,12 @@
+import 'dart:convert';
+
+import 'package:maisdata/model/field_capitalization.dart';
+import 'package:maisdata/model/field_keyboard_type.dart';
+import 'package:maisdata/model/field_mask.dart';
+import 'package:maisdata/model/field_type.dart';
 import 'package:maisdata/presentation/widgets/fields/field_widget.dart';
 
-class Field {
+class Field extends JsonEncoder {
   final String label;
   final String helper;
   final bool isRequired;
@@ -14,41 +20,36 @@ class Field {
     this.helper,
     this.isRequired,
     this.capitalization = FieldCapitalization.NONE,
-    this.type = FieldType.NO_TYPE,
+    this.type,
     this.keyboardType = FieldKeyboardType.TEXT,
     this.mask = FieldMask.NONE,
   });
-}
 
-enum FieldCapitalization { WORDS, SENTENCES, CHARS, NONE }
-enum FieldType { NAME, QUANTITY, DATE, NO_TYPE }
-enum FieldKeyboardType { TEXT, NUMBER, PHONE }
-enum FieldMask { DECIMAL, DATE, NONE }
+  Map<String, dynamic> toJson() => {
+        'label': label.toString(),
+        'helper': helper.toString(),
+        'isRequired': isRequired.toString(),
+        'capitalization': capitalization.toString(),
+        'type': type.toString(),
+        'keyboardType': keyboardType.toString(),
+        'mask': mask.toString(),
+      };
 
-extension FieldTypeExtensions on FieldType {
-  String getDescription() {
-    switch (this) {
-      case FieldType.NAME:
-        {
-          return 'Nome';
-        }
-        break;
-      case FieldType.QUANTITY:
-        {
-          return 'Quantidade';
-        }
-        break;
-      case FieldType.DATE:
-        {
-          return 'Data';
-        }
-        break;
-      default:
-        {
-          return 'Sem tipo';
-        }
-        break;
-    }
+  static String toJsonList(List<Field> fields) {
+    return jsonEncode(fields.map((e) => jsonEncode(e)).toList());
+  }
+
+  static Field fromJson(String source) {
+    final json = jsonDecode(source);
+    return Field(
+      label: json['label'],
+      helper: json['helper'],
+      isRequired: json['isRequired'] == 'true' ? true : false,
+      capitalization: '${json['capitalization']}'.toFieldCapitalization(),
+      type: FieldType.stringToFieldType(json['type']),
+      keyboardType: '${json['keyboardType']}'.toFieldKeyboardType(),
+      mask: '${json['mask']}'.toFieldMask(),
+    );
   }
 }
 

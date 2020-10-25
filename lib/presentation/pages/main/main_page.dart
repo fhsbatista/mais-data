@@ -8,6 +8,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   int _selectedScreenIndex = 0;
   final _screens = [
     HomePage(),
@@ -18,6 +19,10 @@ class _MainPageState extends State<MainPage> {
     setState(() {
       _selectedScreenIndex = itemTappedIndex;
     });
+  }
+
+  _onError(String error) {
+    scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(error)));
   }
 
   @override
