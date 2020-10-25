@@ -85,9 +85,10 @@ class _CreateFormPageState extends State<CreateFormPage> {
             (dynamic error) => _onSaveFormError(error as ArgumentError));
   }
 
-  _onSaveFormError(ArgumentError error) {
-    _scaffoldKey.currentState
-        .showSnackBar(SnackBar(content: Text(error.toString())));
+  _onSaveFormError(dynamic error) {
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(content: Text(error.toString())),
+    );
   }
 
   @override
@@ -141,7 +142,7 @@ extension on Field {
                 children: <Widget>[
                   Container(
                       margin: EdgeInsets.only(top: 8),
-                      child: Text('Tipo: ${this.type.getDescription()}')),
+                      child: Text('Tipo: ${this.type.description}')),
                   Container(
                       margin: EdgeInsets.only(top: 2),
                       child: Text('Dica: ${this.helper}')),

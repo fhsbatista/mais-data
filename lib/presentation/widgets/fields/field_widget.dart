@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maisdata/model/field.dart';
+import 'package:maisdata/model/field_type.dart';
 import 'package:maisdata/shared/field_validators.dart';
 import 'package:maisdata/shared/formatters.dart';
 import 'package:maisdata/shared/masks.dart';
@@ -35,7 +36,7 @@ class FieldWidget extends StatelessWidget {
   }
 
   String getTypeDescription() {
-    return this.fieldType.getDescription();
+    return this.fieldType.description;
   }
 
   @override
@@ -58,7 +59,7 @@ class FieldWidgetBuilder {
   TextInputFormatter formatter = UselessFormatter();
   TextInputType keyboardType = TextInputType.text;
   TextCapitalization capitalization = TextCapitalization.none;
-  FieldType fieldType = FieldType.NO_TYPE;
+  FieldType fieldType = NoType();
   bool isRequired = false;
   double padding = 10;
   void Function(String text) onChanged;
@@ -98,27 +99,14 @@ class FieldWidgetBuilder {
 
   setType(FieldType type) {
     fieldType = type;
-    switch (type) {
-      case FieldType.NAME:
-        {
-          _setNameType();
-        }
-        break;
-      case FieldType.DATE:
-        {
-          _setNameType();
-        }
-        break;
-      case FieldType.QUANTITY:
-        {
-          _setNameType();
-        }
-        break;
-      default:
-        {
-          _setNameType();
-        }
-        break;
+    if (type is Name) {
+      _setNameType();
+    } else if (type is Date) {
+      _setNameType();
+    } else if (type is Quantity) {
+      _setNameType();
+    } else {
+      _setNameType();
     }
   }
 
