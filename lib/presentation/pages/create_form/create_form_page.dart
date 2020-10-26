@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:maisdata/data/data_source/local/app_local_data_source.dart';
 import 'package:maisdata/data/repository/app_repository.dart';
 import 'package:maisdata/data/storage/app_storage.dart';
-import 'package:maisdata/domain/use_case/save_form_use_case.dart';
+import 'package:maisdata/domain/use_case/save_form_usecase.dart';
 import 'package:maisdata/model/field.dart';
 import 'package:maisdata/model/form_model.dart';
 import 'package:maisdata/presentation/pages/create_form/add_field.dart';
@@ -16,6 +16,7 @@ class _CreateFormPageState extends State<CreateFormPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   List<Field> _fields = List<Field>();
   ScrollController _scrollController = ScrollController();
+  final _titleController = TextEditingController();
 
   _displayCreateFormModal(BuildContext context) {
     showModalBottomSheet(
@@ -25,28 +26,29 @@ class _CreateFormPageState extends State<CreateFormPage> {
         return FractionallySizedBox(
           heightFactor: 0.6,
           child: DraggableScrollableSheet(
-              initialChildSize: 1,
-              minChildSize: 0.5,
-              maxChildSize: 1,
-              builder: (context, scrollController) {
-                return SingleChildScrollView(
-                  padding: EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      FlatButton(
-                        child: Text('Fechar'),
-                        onPressed: () => Navigator.pop(context),
-                      ),
-                      AddField(
-                        onSubmit: (field) {
-                          _addField(field);
-                        },
-                      ),
-                    ],
-                  ),
-                );
-              }),
+            initialChildSize: 1,
+            minChildSize: 0.5,
+            maxChildSize: 1,
+            builder: (context, scrollController) {
+              return SingleChildScrollView(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    FlatButton(
+                      child: Text('Fechar'),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    AddField(
+                      onSubmit: (field) {
+                        _addField(field);
+                      },
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
         );
       },
     );
@@ -70,8 +72,11 @@ class _CreateFormPageState extends State<CreateFormPage> {
   }
 
   _saveForm() async {
-    final form = FormModel(title: 'Formulário teste', fields: _fields);
-    final useCase = SaveForm(
+    final form = FormModel(
+      title: _titleController.text,
+      fields: _fields,
+    );
+    final useCase = SaveFormUsecase(
       AppRepository(
         AppLocalDataSource(
           AppStorage(),
@@ -108,12 +113,28 @@ class _CreateFormPageState extends State<CreateFormPage> {
           )
         ],
       ),
-      body: ListView.builder(
-          controller: _scrollController,
-          itemCount: _fields.length,
-          itemBuilder: (context, index) {
-            return _fields[index].toCard(index, () => _deleteField(index));
-          }),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: <Widget>[
+            TextField(
+              controller: _titleController,
+              decoration: InputDecoration(
+                hintText: 'Digite aqui o nome do seu formulário',
+                labelText: 'Nome',
+              ),
+            ),
+            ListView.builder(
+                shrinkWrap: true,
+                controller: _scrollController,
+                itemCount: _fields.length,
+                itemBuilder: (context, index) {
+                  return _fields[index]
+                      .toCard(index, () => _deleteField(index));
+                }),
+          ],
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         backgroundColor: Theme.of(context).accentColor,
@@ -130,53 +151,49 @@ extension on Field {
     return Card(
       elevation: 12,
       margin: EdgeInsets.all(16),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            ListTile(
-              title: Text('${this.label}'),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                      margin: EdgeInsets.only(top: 8),
-                      child: Text('Tipo: ${this.type.description}')),
-                  Container(
-                      margin: EdgeInsets.only(top: 2),
-                      child: Text('Dica: ${this.helper}')),
-                  Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          ListTile(
+            title: Text('${this.label}'),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                    margin: EdgeInsets.only(top: 8),
+                    child: Text('Tipo: ${this.type.description}')),
+                Container(
                     margin: EdgeInsets.only(top: 2),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        Text(
-                          (this.isRequired) ? 'Obrigatório' : 'Opcional',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: (this.isRequired)
-                                  ? Colors.red
-                                  : Colors.green),
+                    child: Text('Dica: ${this.helper}')),
+                Container(
+                  margin: EdgeInsets.only(top: 2),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Text(
+                        (this.isRequired) ? 'Obrigatório' : 'Opcional',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color:
+                                (this.isRequired) ? Colors.red : Colors.green),
+                      ),
+                      Expanded(
+                        child: Container(),
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.delete,
+                          color: Colors.red,
                         ),
-                        Expanded(
-                          child: Container(),
-                        ),
-                        IconButton(
-                          icon: Icon(
-                            Icons.delete,
-                            color: Colors.red,
-                          ),
-                          onPressed: onDelete,
-                        )
-                      ],
-                    ),
+                        onPressed: onDelete,
+                      )
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
