@@ -1,16 +1,12 @@
-enum FieldKeyboardType { TEXT, NUMBER, PHONE }
+import 'package:enum_to_string/enum_to_string.dart';
 
-extension Extensions on String {
-  FieldKeyboardType toFieldKeyboardType() {
-    switch (this.toLowerCase()) {
-      case 'text':
-        return FieldKeyboardType.TEXT;
-      case 'number':
-        return FieldKeyboardType.NUMBER;
-      case 'phone':
-        return FieldKeyboardType.PHONE;
-      default:
-        return null;
-    }
-  }
+enum FieldKeyboardType { TEXT, NUMBER, PHONE, DATE }
+
+extension StringExtensions on String {
+  FieldKeyboardType toFieldKeyboardType() =>
+      EnumToString.fromString(FieldKeyboardType.values, this);
+}
+
+extension EnumExtensions on FieldKeyboardType {
+  String asString() => EnumToString.convertToString(this).toLowerCase();
 }

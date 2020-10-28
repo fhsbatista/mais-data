@@ -4,6 +4,7 @@ import 'package:maisdata/data/repository/app_repository.dart';
 import 'package:maisdata/data/storage/app_storage.dart';
 import 'package:maisdata/domain/use_case/save_form_usecase.dart';
 import 'package:maisdata/model/field.dart';
+import 'package:maisdata/model/field_type.dart';
 import 'package:maisdata/model/form_model.dart';
 import 'package:maisdata/presentation/pages/create_form/add_field.dart';
 

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:maisdata/model/field_capitalization.dart';
-import 'package:maisdata/model/field_keyboard_type.dart';
 import 'package:maisdata/model/field_mask.dart';
 import 'package:maisdata/model/field_type.dart';
 import 'package:maisdata/presentation/widgets/fields/field_widget.dart';
@@ -12,7 +11,6 @@ class Field extends JsonEncoder {
   final bool isRequired;
   final FieldCapitalization capitalization;
   final FieldType type;
-  final FieldKeyboardType keyboardType;
   final FieldMask mask;
 
   Field({
@@ -21,7 +19,6 @@ class Field extends JsonEncoder {
     this.isRequired,
     this.capitalization = FieldCapitalization.NONE,
     this.type,
-    this.keyboardType = FieldKeyboardType.TEXT,
     this.mask = FieldMask.NONE,
   });
 
@@ -31,7 +28,6 @@ class Field extends JsonEncoder {
         'isRequired': isRequired.toString(),
         'capitalization': capitalization.toString(),
         'type': type.toString(),
-        'keyboardType': keyboardType.toString(),
         'mask': mask.toString(),
       };
 
@@ -46,8 +42,7 @@ class Field extends JsonEncoder {
       helper: json['helper'],
       isRequired: json['isRequired'] == 'true' ? true : false,
       capitalization: '${json['capitalization']}'.toFieldCapitalization(),
-      type: FieldType.stringToFieldType(json['type']),
-      keyboardType: '${json['keyboardType']}'.toFieldKeyboardType(),
+      type: '${json['type']}'.toFieldType(),
       mask: '${json['mask']}'.toFieldMask(),
     );
   }
@@ -58,7 +53,8 @@ extension FieldExtensions on Field {
     return (FieldWidgetBuilder()
           ..isRequired = this.isRequired
           ..setLabel(this.label)
-          ..setType(this.type))
+          ..setType(this.type)
+          ..setKeyboardType(this.type.keyboardType))
         .build();
   }
 }

@@ -1,32 +1,51 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:maisdata/model/field_keyboard_type.dart';
 import 'package:maisdata/model/field_type.dart';
+import 'package:maisdata/shared/exceptions/enum_parsing_exception.dart';
 
 void main() {
   group('converting string to a fieldtype', () {
     test('should return Name', () {
       //arrange
-      expect(FieldType.stringToFieldType('name'), isA<Name>());
-      expect(FieldType.stringToFieldType('NAME'), isA<Name>());
+      expect('name'.toFieldType(), FieldType.NAME);
+      expect('NAME'.toFieldType(), FieldType.NAME);
     });
     test('should return Quantity', () {
       //arrange
-      expect(FieldType.stringToFieldType('quantity'), isA<Quantity>());
-      expect(FieldType.stringToFieldType('QUANTITY'), isA<Quantity>());
+      expect('quantity'.toFieldType(), FieldType.QUANTITY);
+      expect('QUANTITY'.toFieldType(), FieldType.QUANTITY);
     });
     test('should return Date', () {
       //arrange
-      expect(FieldType.stringToFieldType('date'), isA<Date>());
-      expect(FieldType.stringToFieldType('DATE'), isA<Date>());
+      expect('date'.toFieldType(), FieldType.DATE);
+      expect('DATE'.toFieldType(), FieldType.DATE);
     });
-    test('should return Name', () {
+    test('should return Phone', () {
       //arrange
-      expect(FieldType.stringToFieldType('notype'), isA<NoType>());
-      expect(FieldType.stringToFieldType('NOTYPE'), isA<NoType>());
+      expect('phone'.toFieldType(), FieldType.PHONE);
+      expect('PHONE'.toFieldType(), FieldType.PHONE);
     });
-    test('WHEN input is an invalid string, should return NoType', () {
+    test('should return NOTYPE', () {
       //arrange
-      expect(FieldType.stringToFieldType('fadsf'), isA<NoType>());
-      expect(FieldType.stringToFieldType('FASDF'), isA<NoType>());
+      expect('notype'.toFieldType(), FieldType.NOTYPE);
+      expect('NOTYPE'.toFieldType(), FieldType.NOTYPE);
+    });
+  });
+
+  group('WHEN getting the keyboard type', () {
+    test('should return TEXT', () {
+      //assert
+      expect(FieldType.NAME.keyboardType, FieldKeyboardType.TEXT);
+      expect(FieldType.NOTYPE.keyboardType, FieldKeyboardType.TEXT);
+    });
+    test('should return NUMBER', () {
+      //assert
+      expect(FieldType.QUANTITY.keyboardType, FieldKeyboardType.NUMBER);
+      expect(FieldType.DATE.keyboardType, FieldKeyboardType.NUMBER);
+    });
+    test('should return PHONE', () {
+      //assert
+      expect(FieldType.PHONE.keyboardType, FieldKeyboardType.PHONE);
     });
   });
 }

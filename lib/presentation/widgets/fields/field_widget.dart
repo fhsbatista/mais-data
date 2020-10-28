@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maisdata/model/field.dart';
+import 'package:maisdata/model/field_keyboard_type.dart';
+import 'package:maisdata/model/field_type.dart';
 import 'package:maisdata/model/field_type.dart';
 import 'package:maisdata/shared/field_validators.dart';
 import 'package:maisdata/shared/formatters.dart';
@@ -59,7 +61,7 @@ class FieldWidgetBuilder {
   TextInputFormatter formatter = UselessFormatter();
   TextInputType keyboardType = TextInputType.text;
   TextCapitalization capitalization = TextCapitalization.none;
-  FieldType fieldType = NoType();
+  FieldType fieldType = FieldType.NOTYPE;
   bool isRequired = false;
   double padding = 10;
   void Function(String text) onChanged;
@@ -78,32 +80,43 @@ class FieldWidgetBuilder {
     this.decoration = decoration.copyWith(border: border);
   }
 
+  setKeyboardType(FieldKeyboardType type) {
+    switch (type) {
+      case FieldKeyboardType.DATE:
+        this.keyboardType = TextInputType.datetime;
+        break;
+      case FieldKeyboardType.TEXT:
+        this.keyboardType = TextInputType.multiline;
+        break;
+      case FieldKeyboardType.NUMBER:
+        this.keyboardType = TextInputType.number;
+        break;
+      case FieldKeyboardType.PHONE:
+        this.keyboardType = TextInputType.phone;
+        break;
+    }
+  }
+
   setNameFormatter() {
     this.capitalization = TextCapitalization.words;
   }
 
   setDecimalFormatter() {
     this.formatter = DecimalNumberFormatter();
-    this.keyboardType = TextInputType.number;
   }
 
   setDateFormatter() {
     this.formatter = MaskTextInputFormatter(
         mask: kDateMask, filter: {"#": RegExp(r'[0-9]')});
-    this.keyboardType = TextInputType.datetime;
-  }
-
-  setOnlyNumbersKeyboard() {
-    this.keyboardType = TextInputType.number;
   }
 
   setType(FieldType type) {
     fieldType = type;
-    if (type is Name) {
+    if (type == FieldType.NAME) {
       _setNameType();
-    } else if (type is Date) {
+    } else if (type == FieldType.DATE) {
       _setNameType();
-    } else if (type is Quantity) {
+    } else if (type == FieldType.QUANTITY) {
       _setNameType();
     } else {
       _setNameType();
@@ -112,7 +125,6 @@ class FieldWidgetBuilder {
 
   _setNameType() {
     capitalization = TextCapitalization.words;
-    keyboardType = TextInputType.text;
   }
 
   FieldWidget build() {

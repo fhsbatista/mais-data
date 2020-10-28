@@ -65,7 +65,7 @@ class _AddFieldState extends State<AddField> {
               fieldType = value;
             });
           },
-          items: FieldType.types
+          items: FieldType.values
               .map<DropdownMenuItem<FieldType>>(
                 (type) => DropdownMenuItem<FieldType>(
                   value: type,

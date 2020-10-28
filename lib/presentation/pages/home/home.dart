@@ -16,7 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final GetFormsUseCase useCase = GetForms(
+  final GetFormsUseCase getFormsUsecase = GetForms(
     AppRepository(
       AppLocalDataSource(
         AppStorage(),
@@ -35,8 +35,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _setForms() async {
-    await useCase
-        .call()
+    await getFormsUsecase()
         .then((value) => setState(() => _forms = value))
         .catchError((error) => _onError(error));
   }
